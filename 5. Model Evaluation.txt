@@ -1,0 +1,24 @@
+ ### IN-COMPLETE
+
+1.) Evaluation Metrics for classification:
+
+Accuracy: Ratio of correctly predicted instances to total number of instances.
+Precision: Measures how many predicted positive instances are actually positive.
+Recall: Measures how many positive instances are correctly predicted.
+F1-score: It is harmonic mean of precision, recall (HM = 2ab/(a+b))
+Confusion Matrix: A 2d matrix where (i,j) means no. of instances whose actual output class is i, but model predicted as j.
+
+1. TP - True Positive: Actual output is positive + predicted output is positive
+2. TN - Actual -ve, pred -ve
+3. FP - Actual -ve, Pred +ve
+4. FN - Actual +ve, Pred -ve
+
+Accuracy:  (tp+tn) / (tp+tn+fp+fn)
+Precision: (tp) / (tp+fp)
+Recall: (tp) / (tp+fn)
+
+2.) Evaluation metrics for regression:
+
+Error: Measure of (y_actual - y_pred)
+MAE, MSE, RMSE, R^2 comes into picture in this scenario, and way of increasing accuracy, is to reduce all errors(MAE, MSE, RMSE) and increase R^2.
+

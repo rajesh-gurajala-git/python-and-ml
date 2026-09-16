@@ -1,0 +1,242 @@
+TYPES: -------------------
+
+type(1)		=> int
+type(7.55)	=> float
+type("trew")	=> str
+type(True)	=> bool
+
+float(2)	=> 2.0
+
+int(1.99)	=> 1
+int('7')	=> 7
+int('D')	=> error !!
+
+str(5)		=> "5"
+str(9.71)	=> "9.71"
+
+
+STRINGS: ---------------------
+
+1. strings can be "abg ujh" or 'michael jordham'
+2. string is an array of chars, so can access a char with index.
+3. s="Michael Jackson". then s[0] = 'M', s[-1] = 'n', s[0:4] = Mich, s[8:12] = Jack, len(s) => 15
+4. s="abc". Then p = 3 * s. Then p = "abcabcabc"
+
+STRING METHODS
+If we pass a string A to a string method, it gives another string B.
+
+A = "AsdfghIU"
+B = A.upper() 			=> B = "ASDFGHIU"
+C = A.replace('df', 'yt')	=> C = "AsytghIU"
+D = A.find('dfg')		=> D = 2
+
+PYTHON DATA STRUCTURES: ----------------------------------------------------------------------------------------
+
+1. LISTS
+
+lst = []
+l = [123, 9.336, "jbyuhbyu tt", [5,6,7], ('A', 23)]
+l[1:3]				=> [9.336, "jbyuhbyu tt"]
+l = l + 45			=> element 45 is pushed into list l
+similarly, l.extend([34, 67])	=> 2 elements 34, 67 pushed into list l
+similarly, l.append([44,55])	=> 1 element [44,55] arr is pushed into list l
+
+To delete an element, use del(l[1])
+Then, 9.336 is deleted from l
+
+A = [1,2,3,4....]
+B = A
+Then, B is also referencing A. So, any changes made to A, can be seen in B.
+To get a copy of A, B = A[:]. Now B stays as it is, even though A is changed.
+
+last_el = A.pop()
+last_el gets last element of A, and it gets popped out.
+
+A.reverse()	=> reverses list
+A.sort()	=> sorts list
+
+
+2. DICTIONARY
+
+dic = {}
+dic[1] = 5
+dic[1] = dic[1] + 11
+dic['awe'] = 25
+
+dic2 = {"name": "jonathan", "age": 45, 56: 11}
+To get all keys of a dict, use list(dict2.keys())
+
+
+3. SETS
+=> sets are unordered, unique
+
+st = set()
+st = {1,2,3,4,5,4,3,6}
+list(st) gives [1,2,3,4,5,6]. similarly, set(l2) makes a list into set
+
+st.add(9) 	=> inserts element 9 into set st
+st.remove(3)	=> removes element 3 from set st
+To check existence of a element ( 5 in st ) => returns True / False
+
+----------------------------------------------------------------------------------------------------------------------------------------
+
+PROGRAMMING FUNDA:
+
+1. CONDITIONS
+
+5 == 6 => False, "geggwe" != "Maje" => True
+
+if age > 18 and gender == 'M':
+	print("Eligible for voting")
+elif (age >= 10) or (gender == 'M'):
+	print("Eligible for education")
+else:
+	print("Human Trafficking")
+	
+	
+2. LOOPS
+
+range(6) gives a list [0,1,2,3,4,5]
+range(3,8) gives a list [3,4,5,..7]
+
+for i in range(5):
+	modulus[i] = i % 10
+	
+i = 0
+while(i < 10):
+	print(i)
+	i = i + 1
+	
+fruits = ["app", "banan", "mang"]
+for fruit in fruits:
+	print(fruit)
+	
+To get index along with item, we use Enumerated for loop.
+for index, fruit in enumerate(fruits):
+	print(f" At index {index}, {fruit} is present \n")
+	
+
+
+3. FUNCTIONS
+
+i. classic:
+
+def analyse(input, bias):
+	print(f"Given input is {input}")
+	if input % 2 == 0:
+		print("input is even")
+	else:
+		print("input is odd")
+	
+	output = input * 100 + bias
+	return output
+	
+o1 = analyse(23, 6)
+o2 = analyse(44, 1)
+print(o1, o2)
+
+
+ii. Multi Parameter:
+
+def analyse(*items):
+	for item in items:
+		print(item)
+
+analyse(1,2,3,4)
+anslyse(66,52)
+
+
+4. EXCEPTION HANDLING
+
+try:
+	# read file
+	# write file
+except IOError:
+	print("unable to read or write file")
+except:
+	print("other kind of error occured")
+else:
+	print("File was written successfully.")
+finally:
+	# close file
+	print("File is closed")
+	
+5. CLASSES AND OBJECTS
+
+An object has data, internal attributes and methods.
+EG: l.sort() is a method of list class
+
+creating Circle class:
+
+class Circle(object):
+	brand = "Honda"
+	def __init__(self, r, c):
+		self.radius = r
+		self.color  = c
+		
+	def add_radius(self, x):
+		self.radius = self.radius + x
+		return self.radius
+		
+	# u can make a new attribute with a method
+	def add_cap(self, cap):
+		self.capacity = cap
+		
+		
+		
+c1 = Circle(5, "Blue")
+c2 = Circle(82, "Yellow")
+c1.radius = 11
+c1.add_cap(250)
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------>>>>>>>>>>>>>>>>>
+
+FILE HANDLING IN PYTHON
+
+We will use python built-in open function to create a file object and obtain data from a txt file.
+
+1. READ FILE
+
+file1 = open("/resources/idx.txt", "r") => ARG: (FILE_LOCATION, MODE) (r = read, w = write, a = append)
+
+methods, attributes of file1:
+file1.name	'/resources/idx.txt'
+file1.mode	'r'
+file1.close()	instead of using close() evrytime, we do [ with open("...") ] which closes file automatically
+
+with open("resources/idx.txt") as file1:
+	file_stuff = file1.read()
+	print(file_stuff)		# PRINTS FILE CONTENT !!
+print(file_stuff)			# VALID !!
+
+now file_stuff contains entire content in a string, to get content as array of string where each string is of each line,
+with open("/idx.txt") as file:
+	stuff = file.readlines()
+print(stuff)		# ["line 1 \n", "line 2 ... \n"]
+
+Also to get line by line,
+with open("/a.txt") as file1:
+	for line in file1:
+		print(line)
+		
+		
+2. WRITE FILE
+
+file2 = open("/b.txt", "w")
+file2.close()
+
+with open("/b.txt", "w") as file2:
+	file2.write("This is abc \n Finally, conclusion")
+	lines = ["line1\n", "line2\n", "line3\n"]
+	for line in lines:
+		file2.write(line)
+		
+		
+EXERCISE:
+Read content from file 1 and write it to file 2.
+
+with open("/file1.txt", "r") as file1:
+	with open("/file2.txt", "w") as file2:
+		for line in file1:
+			file2.write(line)

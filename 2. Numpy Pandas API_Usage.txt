@@ -1,0 +1,116 @@
+PANDAS
+
+import pandas as pd
+df = pd.read_csv("data.csv")
+=> suppose if csv file has no headers, a.k.a 1st row starts from entry and not column names, then set header=None by 
+df = pd.read_csv("data.csv", header=None)
+
+then suppose u manually made a headers list like 
+hdr = ["name", "age", "country", "price"]
+df.columns = headers
+
+gf = pd.read_excel("reports.xlsx")
+
+df.head()	# gives top 5 entries, can pass n value
+
+# creating a data-frame from a dictionary
+songs = { "name": ["boom..", "qwer..", "poyte.."],
+	  "year": [1987, 2034, 2006],
+	  "length": ["00:02:30", "00:01:03", "00:03:28"] }
+	  
+songs_df = pd.DataFrame(songs)
+
+=> in python a string, then in pandas it is object data type.
+
+ACCESSING:	------------------------------------------------------
+
+# creating new DataFrames out of existing ones
+x = df[['Country', 'Education', 'Gender']]
+y = df[['Salary']]
+
+# A data frame is simply a 2d matrix of entries, where i = entry index, j = attribute index in that entry i.
+val = df.iloc[i,j]	# gives value at i-th row, j-th col.
+
+# instead of j-value, access with i value and attribute name by:
+val = df.loc[i,'Genre']
+
+# slicing a df and making a new df of it
+p = df.iloc[0:2, 0:3]	
+q = df.loc[0:5, 'Name':'Country']
+
+
+--------------------------------------------------------------------------------------------------------------------
+
+WORKING WITH DATA:
+
+=> To get unique values of a column, like all unique years in years column, df['Years'].unique()
+=> In a songs df of (song_name, year, rating, views, genre, artist ...); to get data of all songs released_year > 1980 :
+	STEP-1:		df['Year'] > 1980 gives a series / list of boolean values	[T,F,F,F,T,T,T,F,T,F,F,T,F,T,F]
+	STEP-2:		pass these bools as indices, get required data.			df[df['Released'] > 1980]
+	
+=> To save a data-frame in a csv file, df.to_csv('new_file_name.csv')
+
+--------------------------------------------------------------------------------------------------------------------
+
+Pandas Reading part:
+
+DataFrames provide numerous attributes and methods for data manipulation and analysis, including:
+shape: Returns the dimensions (number of rows and columns) of the DataFrame.
+info(): Provides a summary of the DataFrame, including data types and non-null counts.
+describe(): Generates summary statistics for numerical columns.
+head(), tail(): Displays the first or last n rows of the DataFrame
+
+mean(), sum(), min(), max(): Calculate summary statistics for columns.
+sort_values(): Sort the DataFrame by one or more columns.
+groupby(): Group data based on specific columns for aggregation.
+fillna(), drop(), rename(): Handle missing values, drop columns, or rename columns.
+apply(): Apply a function to each element, row, or column of the DataFrame.
+
+--------------------------------------------------------------------------------------------------------------------
+
+NUMPY
+
+i) 1-D NUMPY:
+
+import numpy as np
+a = np.array([1,2,3,4])
+type(a)		# numpy.ndarray
+a.dtype		# dtype('int64')
+a.size		# 4
+a.ndim		# 1
+a.shape		# (4,)
+
+INDEXING AND SLICING:	a[3] = 99, b = a[0:3]
+
+VECTOR ADDITION AND SUBTRACTION: u=[10,11], v=[21,30]  z = u + v   # z = [31, 41]
+ARRAY ADDITION WITH SCALAR: x = np.array([1,2,3,4])    z = x + 5   # z = [6,7,8,9]
+ARRAY MULTIPLICATION WITH SCALAR: y = np.array([1,2])  z = 2 * y   # z = [2,4]
+MULTIPLICATION OF 2 ARRAYS:  x = [2,4] y = [3,6]       z = x * y   # z = [6, 24] 
+DOT PRODUCT OF 2 ARRAYS: x = [2,4] y = [3,6] 	       z = np.dot(x, y)		# z = 6 + 24 = 30
+
+UNIVERSAL FUNCTIONS:
+
+x = [1,2,3,4]
+avg = x.mean()
+maxx = x.max()
+
+----------------------------------------------
+
+ii) 2-D NUMPY:
+
+a = [[11,12,13], [21,22,23], [31,32,33]]
+b = np.array(a)
+
+b.ndim	# 2
+b.shape	# (3,3)
+b.size	# 9
+
+b[1][2]		=> 23
+b[0,0:2]	=> [11,12]
+b[0:2, 0:2]	=> [[11,12], [21,22]]
+
+consider two 2d matrices x,y:	we already know x+y, x-y, x+k, x*k, x*y
+z = np.dot(x,y) does actual 2 matrices multiplication
+
+--------------------------------------------------------------------------------------------------------------------
+

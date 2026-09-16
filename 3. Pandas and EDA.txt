@@ -1,0 +1,159 @@
+import pandas as pd
+df = pd.read_csv("data.csv")
+
+df.head(10)
+df.dtypes
+df.describe()
+df.info()
+
+
+DATA WRANGLING
+
+1. How to deal with missing values in data frame ??
+
+Missing value means no value in a cell, might be a ?, N/A, 0, blank cell or a NaN in numerical cell.
+Ways to deal with missing values:
+i. Check back in original dataset source.
+ii. Drop missing value (either that entry or that column)
+iii. Replace missing values with average(continous range), most frequent element (discrete)
+
+For example, to drop a missing row, where 'price' is missing:
+df.dropna(subset=["price"], axis=0, inplace=True)
+
+For example, to replace missing values in normalised_losses column:
+
+mean = df["normalized_losses"].mean()
+df["normalized_losses"].replace(df.nan, mean)
+
+
+2. Data Formatting
+
+For example all values under "Distance-m" is present in meters, but u want to see them in km's.
+
+df["Distance-m"] = df["Distance-m"] / 1000
+df.rename(columns = {"Distance-m": "Distance-km"}, inplace=True)
+
+
+3. Data Normalisation:	uniform the values with different range.
+
+For example, we have two colums in dta frame: age btw [0, 100] and income btw [100, 1000000]
+As the range of income is so huge, in some models like linear regression, large values influence output more than age.
+So to give equal importance to evry attribute, we normalise values.
+
+Few methods of normalisation include:
+i. Simple Feature scaling: x_curr = x_curr / x_max			=> Range: [0, 1]
+ii. Min-Max scaling: x_curr = (x_curr - x_min) / (x_max - x_min)	=> Range: [0, 1]
+iii. z-score: x_curr = (x_curr - x_mean) / (x_std)			=> Range: around zero a.k.a -x to +y
+
+Suppose to implement min-max on "income" column:
+df["income"] = (df["income"] - df["income"].min()) / (df["income"].max() - df["income"].min())
+
+
+4. Binning:  Grouping of values into bins
+=> Converts numerical into categorical variables	Eg: 10-20, 21-30, 31-40, ....
+
+
+5. Turning categorical variables into Quantitative
+
+Problem: Most statistical models can't take objects / strings as input
+Eg: a dataframe of vehicles which contains name, fuel and fuel has only 4 values (petrol, diesel, hydrogen, ev)
+
+1 solution can be one hot encoding. 
+Instead of df["fuel"] = "petrol" / "diesel" / "hydrogen" / "ev"
+We make 4 new colums into df. They're df["petrol"], df["diesel"], ...
+And assign them 0 / 1 a.k.a True / False.
+
+df = pd.get_dummies(df, columns=['fuel'], dtype=int)
+now fuel column gets removed, 4 new rows, pet, die, h2, ev of values 0/1 emerge.
+
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+EXPLORATORY DATA ANALYSIS (EDA)
+
+Preliminary step in data analysis:
+=> Summarise main characteristics of data
+=> Uncover relationships btw variables
+=> Extract important variables
+
+Here we learn about:
+=> Descriptive statistics, GroupBy, ANOVA, Correlation - statistics namely Pearson co-relation and corelation heatmaps.
+
+1. DESCRIPTIVE STATISTICS:
+
+=> Summarise statistics using df.describe()			[ Gives mean, std, min, max, avg for every column. ]
+=> Summarise categorical values by value_counts()
+	Eg: df["fuel"].value_counts()				[ Gives a table of petrol-231, diesel-189, h2-11, ev-948 ]
+	
+=> Scatter plot
+	We can visualise a relationship btw 2 columns by plotting a graph, 1 variable on x-axis and other on y-axis.
+	Eg:  visualising how much engine_price influences car_price
+		x = df["engine_price"]
+		y = df["car_price"]
+		plt.scatter(x, y)	# scatter is a matplotlib function (import matplotlib.pyplot as plt)
+		
+---------------------------------------------
+
+2. GROUP BY()
+
+Do u want to know if any relation exist between fuel_type and car_price ??
+Suppose fuel_type can be petrol / diesel / h2 / ev
+Pandas group by method can be applied to categorical variables.
+
+
+df_test = df[['fuel', 'color', 'price']]
+df_grp  = df_test.group_by(['fuel', 'color'], as_index=False).mean()
+# This calculates average prices of petrol-black, petrol-red, ev-blue, .... and gives em as a data frame.
+
+=> PIVOT TABLE:
+
+The relation we are analysing is (fuel, color) => (price) and group by gives [petrol, red, 10], [diesel, black, 25] ....
+A pivot table instead, gives a 2d matrix where i = 1 independent variable, j = another independent var' and mat[i][j] = dependent value.
+
+df_pivot = df_grp.pivot(index='fuel', columns='color')
+# Here i = fuel, j = color, mat[i][j] = price => mat[petrol][red] = 10
+
+=> HEAT MAP:
+
+A Heat Map plots a graph with similar x = fuel, y = price, and color darkness at (x,y) directly proportional to price(x,y)
+
+plt.pcolor(df_pivot, cmap='RdBu')
+plt.colorbar()
+plt.show()
+
+-----------------------------------
+
+3. CORRELATION:
+=> Measures to what extent variables are inter-dependent
+=> Eg: High smoking : Lung Cancer, Rain : Umbrella usage
+
+
+Eg: 
+# This plots a straight line btw fuel and price => a increasing line shows positive correlation btw (fuel, price).
+sns.regplot(x="fuel", y="price", data=df)
+plt.ylim(0,)
+
+# Suppose we plot btw (charging_capacity, charging_cycles)	=> Decreasing line as more capacity implies no need to charge frequently.
+=> It implies negative correlation btw (cap, cycles).
+
+# Suppose a plot btw (color, price) gives a almost flat line, 	=> color can't manipulate price much so weak correlation.
+
+
+STATISTICAL METHODS FOR CORRELATION:
+
+1. Pearson Correlation: Measure the strength of correlation btw 2 features by giving 2 values:
+	=> Correlation coefficient, p-value.
+	=> Correlation coefficient value: close to +1 strongly positive correlated, 
+					  close to -1 strongly negative, 
+					  close to 0 weakly correlated
+
+	=> p-value tells how certain we are about the correlation we calculated.
+	p < 1/1000 strong certainity in result
+	p < 1/20   moderate certainity
+	p < 1/10   weak certainity in calculated coefficient value
+	p > 1/10   no certainity
+	
+	Pearson correlation is calculated btw 2 columns with Scipy stats package.

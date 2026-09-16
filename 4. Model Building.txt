@@ -1,0 +1,107 @@
+REGRESSION:
+
+SIMPLE LINEAR REGRESSION: (1 input variable, 1 output varuable)
+# SKLEARN CODE
+
+
+MULTPILE LINEAR REGRESSION: ( multiple input variable, 1 output variable)
+
+=> Multiple linear regression generally performs better than simple one.
+=> Sometimes, including too many variables may cause overfitting.
+=> To improve prediction, convert categorical independent variables to numerical variables.
+=> Remove redundant variables and include variables which are most correlated with target.
+=> (x,y) => line; (x, y, z) => represents plane and (x1, x2, ..., xn, y) => represents n dimensional plane
+=> Target here is same, reduce MSE using linear algebra.
+
+
+POLYNOMIAL AND NON-LINEAR REGRESSION:
+
+=> polynomial: linear, quadratic, cubic eq'ns, ..... so on to arbitary degree.
+=> polynomial regression is a special case of non-linear regression. 
+=> other examples of non-linear include exponential, logirathmic, periodic equations.
+
+
+LOGISTIC REGRESSION:
+
+=> Logistic regression is a statistic modelling technique, that predicts probability of an observation belonging to 1 of 2 classes.
+=> When target data has exactly 2 classes, a.k.a binary, or when probability of an outcome class is needed, logistic regression is very useful.
+=> If data is linearly separable, decision boundary of logistic regression is a line / plane / hyper-plane.
+=> Usecases include predicting product failure probability, predicting heart attack risk, probablility of customer purchase a product etc..
+=> Customer churning / leaving out product is a use case too.
+=> Of course, u cant use a linear regression to predict 0/1, instead we need a threshold.
+
+Steps to build a logistic regression model:
+
+1. Identify parameters that map input features to target outcomes, which can be random values.
+2. Calculate probablity of a class, and calculate prediction error with loss function like log-loss etc..
+3. Update parameters to reduce prediction error.
+4. Repeat until u achieve a satisfactory pred' error.
+
+1 of most popular methods to update parameters is gradient descent, which depends on a specific learning rate.
+
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+CLASSIFICATION:
+
+=> A supervised ml method where labels form a categorical variable with discrete values.
+=> Some ml classification algos are logistic regression, naive bayes, decision trees, knn, svm, neural networks.
+
+1. LOGISTIC REGRESSION: Discussed early.
+
+2. DECISION TREES:
+
+Training a Desicion Tree:
+i. Start with a seed node and labelled data.
+ii. Find the feature that best splits the data.
+iii. Each split partitions the node's input data.
+iv. Repeat.
+
+For a feature to become the split criteria, it should reduce impurity in leaf nodes.
+Eg: ip data => split feature = cholestrol [high/low] => high : mostly unhealthy :: low : mostly healthy
+
+The measure of impurity is Entropy. 
+Eg: [3a, 12b] => low entropy, [7a, 5b] => high entropy
+    [0a, 9b] => entropy = 0, [5a, 5b] => entropy = 1
+
+
+3. SUPPORT VECTOR MACHINE (SVM):
+
+=> SVM classifies input by identifying heperplane, 
+=> For 2 output classes, considering a straight line.
+=> But sometimes due to noise, strict seperation might not be possible. Hence it incorporates soft margin, means tolerate misclassfications while maximizing margin.
+=> Balance between maximizing margin and minimising number of misclassifcations controlled by a parameter "c".
+=> small c = more mis-classif', softer margin, high c = vice-versa
+
+=> Binary SVM thinks 2 output classes are linearly separable.
+=> Desicion boundary is actual border separating entire plane to 2 classes regions.
+=> Margin is distance between decision boundary and closest point of that region, and nearest point is support vector.
+=> In some datasets, points cant be sepearted by just a straight line. But when plotted in 3d, they can be seperated by horizontal plane. 
+=> Now, u can predict output for an test input by calculating it is above the plane or below plane.
+=> Mapping points into a higher dimension space is called kernelling. Here as straight line can't divide, we kernelled and found a plane can. 
+=> In this case, kernel is a quadratic function.
+
+=> Kernels can be linear, polynomial, RBF, sigmoid ....
+=> SVM can also be used for regression. 
+=> In svm regression, it has 3 components: 
+	i. svm curve / graph: model prediction for all input range.
+	ii. epsilon tube around prediction: when data points lie inside this tube, they're signal, points outside tube are noise.
+	iii. epsilon value: SVR parameter value to define margin, larger epsilon, larger the margin a.k.a tube around svm curve.
+
+
+4. K-NEAREST NEIGHBORS (KNN):
+
+=> Use labelled points near target point to learn how to label other points.
+=> Neighbors: Data points near each other with similar features.
+
+Methodology:
+1. Take input of k, and calculate k nearest neighbors, using Euclidean / Manhattan distance formula.
+2. For classification, output will be most popular class and for regression, average / median of neighbors target values.
+3. Too small k might overfit and cause fluctuations, too large k might underfit and lose fine details, so pick in between.
+
+
+5. BIAS, VARIANCE AND ENSEMBLE MODELS:
+
+### IN-COMPLETE
