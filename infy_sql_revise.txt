@@ -1,0 +1,48 @@
+----------------------------------------------------------------------------------------->>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+
+1148. Article Views I						=> (DISTINCT)
+1683. Invalid Tweets						=> ( length(column) )
+1741. Find Total Time Spent by Each Employee			=> (GROUP BY with multiple columns)
+1693. Daily Leads and Partners					=> (GROUP BY with multiple columns)
+2356. Number of Unique Subjects Taught by Each Teacher		=> (access inner columns after GROUP BY)
+1251. Average Selling Price					=> (correlated sub-query)
+
+
+
+1633. Percentage of Users Attended a Contest			=> ( ORDER BY multiple columns, aggregate fxns for a value )
+1211. Queries Quality and Percentage				=> (AGGREGATE FXNS)
+1141. User Activity for the Past 30 Days I			=> ( dates comparision )
+596.  Classes With at Least 5 Students				=> (aggregate fxn + sub query)
+1581. Customer Who Visited but Did Not Make Any Transactions	=> ( left join + group + sum(col is null) )
+1251. Average Selling Price					=> (LEFT JOIN with 2 conditions in ON clause)
+1158. Market Analysis I						=> (LEFT JOIN, a xtra condition in ON clause to consider NULL values)
+1280. Students and Examinations					=> ( join 3 tables )
+
+1204. Last Person to Fit in the Bus				=> ( window function, running total )
+601.  Human Traffic of Stadium					=> ( CTE )
+180. Consecutive Numbers					=> ( LAG(col, step), LEAD(col, step) )
+
+
+----------------------------------------------------------------------------------------->>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+DO LATER !!!
+STANDARD							=> 177, 196, 262
+
+COALECSE / NULL PROBLEMS					=> 175, 577, 1280, 619, 1378, 1164
+UNION								=> 1789, 1098, 1965, 1435
+STRING FUNCTIONS						=> 1667, 1683, 1517, 1527, 1484
+DATE FUNCTIONS							=> 1141, 1173, 1174, 1193, 1321, 1635
+----------------------------------------------------------------------------------------->>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+
+(INSIGHT OF 1251: most of co-related sub query problems can be solved by inner joins simply !!)
+(coz csq means passing a column value to inner query, and simply join em and extract required cols instead.)
+
+
+USE SUM(age >= 18) not COUNT(age >= 18) AS numerator, COUNT(*) AS denominator
+ALSO SUM(CASE WHEN age >= 18 THEN 25 ELSE -50 END) is also valid.
+CASE WHEN A THEN X WHEN B THEN Y ELSE Z END
+
+Equivalent of LAG(), LEAD() can be made by self join on l2.id = l1.id + 1, l3.id = l1.id - 1
+----------------------------------------------------------------------------------------->>>>>>>>>>>>>>>>>>>>>>>>>>>
